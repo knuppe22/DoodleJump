@@ -2,19 +2,13 @@
 using System.Collections;
 using System;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerMoveControl : MonoBehaviour {
+    [SerializeField]
+    InputManager inputManager;
+
     private bool _isJumping = false;
 
-    private PositionManager.Grid3 _jumpGrid;
-    private PositionManager.Grid3 _JumpGrid()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-            return PositionManager.Grid3.Left;
-        else if (Input.GetKey(KeyCode.RightArrow))
-            return PositionManager.Grid3.Right;
-        else
-            return PositionManager.Grid3.Center;
-    }
+    private GridPos _jumpGrid;
     private Vector2 _direction;
     private float _speed;
     
@@ -46,11 +40,11 @@ public class PlayerControl : MonoBehaviour {
         if(JudgeManager.instance.judge != JudgeManager.JudgeList.Miss && Input.GetKeyDown(KeyCode.Space))
         {
             _isJumping = true;
-            _jumpGrid = _JumpGrid();
+            _jumpGrid = inputManager._JumpGrid();
 
             int gridDiff = (int)_jumpGrid - (int)StepManager.instance.cur.GetComponent<StepInfo>().xGrid;
-            _direction = Vector2.up * PositionManager.yInterval
-                         + Vector2.right * gridDiff * PositionManager.xInterval;
+            _direction = Vector2.up * 1f
+                         + Vector2.right * gridDiff * 1f;
             _speed = _direction.magnitude / GameManager.instance.musicInfo.GetMsPerBeat() * 1000 * Time.deltaTime;
         }
         if(_isJumping)

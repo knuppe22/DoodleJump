@@ -47,9 +47,9 @@ public class StepManager : MonoBehaviour {
     {
         int grid = Random.Range(-1, 2);
         Vector2 pos = under.transform.position;
-        pos.y += PositionManager.yInterval;
-        pos.x = grid * PositionManager.xInterval;
+        pos.y += 1f;
+        pos.x = grid * 1f;
         over = Instantiate(step, pos, Quaternion.identity);
-        over.GetComponent<StepInfo>().xGrid = (PositionManager.Grid3)grid;
+        over.GetComponent<StepInfo>().xGrid = (GridPos)grid;
     }
 }

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-    public static GameManager instance = null;
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public Seasons season = Seasons.Spring;
     public GameObject music;
     public MusicInfo musicInfo;
     public int score = 0;
-
+    
     // public enum StepType { Normal, Double, Hold, ... };  // 추후에 추가바람(StepInfo.cs:8)
 
     // Use this for initialization

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StepInfo : MonoBehaviour
 {
-    public PositionManager.Grid3 xGrid = PositionManager.Grid3.Center;
+    public GridPos xGrid = GridPos.Center;
     // public GameManager.StepType type;
 }
