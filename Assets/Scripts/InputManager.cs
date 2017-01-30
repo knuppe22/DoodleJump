@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField]
     Button LeftJumpButton;
+    [SerializeField]
     Button CenterJumpButton;
+    [SerializeField]
     Button RightJumpButton;
 
     public GridPos _JumpGrid()
@@ -26,6 +29,6 @@ public class InputManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
+		// TODO: Read from button and return result in _JumpGrid
 	}
 }

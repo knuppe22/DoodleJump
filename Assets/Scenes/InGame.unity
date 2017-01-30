@@ -1182,6 +1182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61192f81702af546b4d5aac4bf15bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LeftJumpButton: {fileID: 834102251}
+  CenterJumpButton: {fileID: 107210802}
+  RightJumpButton: {fileID: 1462871612}
 --- !u!4 &1993326187
 Transform:
   m_ObjectHideFlags: 0
