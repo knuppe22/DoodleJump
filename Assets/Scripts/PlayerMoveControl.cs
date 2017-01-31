@@ -11,20 +11,6 @@ public class PlayerMoveControl : MonoBehaviour {
     private GridPos _jumpGrid;
     private Vector2 _direction;
     private float _speed;
-    
-    private void _JumpFinished(bool isJumpSuccessed)
-    {
-        if (isJumpSuccessed == true)
-        {
-            GameManager.instance.score++;
-            StepManager.instance.NextStep();
-        }
-        else
-        {
-            Debug.Log("Fail");
-            Destroy(gameObject);
-        }
-    }
 
     void Start()
     {
@@ -58,7 +44,7 @@ public class PlayerMoveControl : MonoBehaviour {
                 gameObject.transform.position = (Vector2)StepManager.instance.cur.transform.position + _direction;
                 _isJumping = false;
                 inputManager.isJumpButtonPressed = false;
-                _JumpFinished(_jumpGrid == StepManager.instance.next.GetComponent<StepInfo>().xGrid);
+                GameManager.instance.JumpFinished(_jumpGrid == StepManager.instance.next.GetComponent<StepInfo>().xGrid);
             }
         }
     }
