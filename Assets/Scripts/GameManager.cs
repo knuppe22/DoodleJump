@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public MusicInfo musicInfo;
     public int life = 3;
     public int score = 0;
+    public int combo = 0;
+    private int _lastCombo = 0;
+    private bool _isGameOver = false;
 
     // public enum StepType { Normal, Double, Hold, ... };  // 추후에 추가바람(StepInfo.cs:8)
 
@@ -20,18 +23,28 @@ public class GameManager : MonoBehaviour
     {
         if (isJumpSucceeded == true)
         {
-            //score += 100;
+            combo++;
+            score += 100;
             GameObject.Find("Main Camera").transform.Translate(new Vector2(0, 1f));
             StepManager.instance.NextStep();
         }
         else
         {
             Debug.Log("Fail");
+            ResetCombo();
             IsGameOver();
         }
     }
+
+    public void ResetCombo()
+    {
+        _lastCombo = combo;
+        combo = 0;
+    }
+
     public void MissJudge()
     {
+        ResetCombo();
         life--;
     }
 
@@ -59,7 +72,7 @@ public class GameManager : MonoBehaviour
             scoreText.GetComponent<Text>().text = "Life: " + life;
         }
 
-        if (life < 0)
+        if (!_isGameOver && life < 0)
         {
             IsGameOver();
         }
@@ -67,6 +80,9 @@ public class GameManager : MonoBehaviour
 
     void IsGameOver()
     {
+        _isGameOver = true;
+        Debug.Log("LastCombo=" + _lastCombo);
+        score += _lastCombo * 5;
         Destroy(GameObject.Find("Life Text"));
         Destroy(_musicObj);
         GameObject.Find("Game Over Text").GetComponent<Text>().text = "Game Over\n\nScore: " + score;

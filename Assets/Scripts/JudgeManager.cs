@@ -12,7 +12,7 @@ public class JudgeManager : MonoBehaviour {
     
     public float perfectms = 80f;
     public float badms = 120f;
-    public float latency = 210f;
+    public float latency = 225f;
     private float _elapsedTime = 0;
 
     // Use this for initialization
@@ -63,7 +63,7 @@ public class JudgeManager : MonoBehaviour {
 
         if (InputManager.instance.isJumpButtonPressed)
         {
-            Debug.Log(judge);
+            Debug.Log(judge + " (" + _elapsedTime +")");
             if(judge != JudgeList.Poor)
             {
                 _elapsedTime -= 2 * GameManager.instance.musicInfo.GetMsPerBeat();
@@ -76,6 +76,7 @@ public class JudgeManager : MonoBehaviour {
             }
             else
             {
+                GameManager.instance.ResetCombo();
                 GameManager.instance.life--;
             }
         }
