@@ -3,12 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class JudgeManager : MonoBehaviour {
+    [SerializeField]
+    InputManager inputManager;
+    [SerializeField]
+    GameObject player;
+
     public static JudgeManager instance;
-    public enum JudgeList { Miss, Perfect };
+    public enum JudgeList { Poor, Bad, Perfect };
     public JudgeList judge;
     
-    public float judgems = 200f;
-    public float latency = 155f;
+    public float perfectms = 80f;
+    public float badms = 120f;
+    public float latency = 210f;
     private float _elapsedTime = 0;
 
     // Use this for initialization
@@ -22,30 +28,58 @@ public class JudgeManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+        /*
         if (GameManager.instance.musicInfo.offsetms > 0)
         {
             _elapsedTime = (-1 * GameManager.instance.musicInfo.offsetms) % GameManager.instance.musicInfo.GetMsPerBeat() + GameManager.instance.musicInfo.GetMsPerBeat();
         }
-
+        */
+        _elapsedTime -= GameManager.instance.musicInfo.offsetms;
         _elapsedTime -= latency;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         _elapsedTime += Time.deltaTime * 1000;
-        if (_elapsedTime > 2 * GameManager.instance.musicInfo.GetMsPerBeat())
-        {
-            _elapsedTime -= 2 * GameManager.instance.musicInfo.GetMsPerBeat();
-            Debug.Log("On");
-        }
 
-        if (_elapsedTime > judgems && _elapsedTime < 2 * GameManager.instance.musicInfo.GetMsPerBeat() - judgems)
+        if (Mathf.Abs(_elapsedTime) < perfectms)
         {
-            judge = JudgeList.Miss;
+            judge = JudgeList.Perfect;
+        }
+        else if (Mathf.Abs(_elapsedTime) < badms)
+        {
+            judge = JudgeList.Bad;
         }
         else
         {
-            judge = JudgeList.Perfect;
+            judge = JudgeList.Poor;
+        }
+
+        if (_elapsedTime > badms)
+        {
+            GameManager.instance.MissJudge();
+            _elapsedTime -= 2 * GameManager.instance.musicInfo.GetMsPerBeat();
+            Debug.Log("Miss");
+        }
+
+        if (inputManager.isJumpButtonPressed)
+        {
+            Debug.Log(judge);
+            if(judge != JudgeList.Poor)
+            {
+                _elapsedTime -= 2 * GameManager.instance.musicInfo.GetMsPerBeat();
+            }
+            inputManager.isJumpButtonPressed = false;
+
+            if (judge == JudgeList.Perfect)
+            {
+                player.GetComponent<PlayerMoveControl>().ReadyToJump();
+            }
+            else
+            {
+                //life--;
+            }
         }
     }
 }

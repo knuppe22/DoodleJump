@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Fail");
         }
     }
+    public void MissJudge()
+    {
+        //life--;
+    }
 
     // Use this for initialization
     void Start()

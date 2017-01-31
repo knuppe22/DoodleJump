@@ -547,9 +547,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f288c97e92e8db24687b0a92d35e610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 1993326186}
+  player: {fileID: 1904722080}
   judge: 0
-  judgems: 100
-  latency: 155
+  jumpTrigger: 0
+  perfectms: 80
+  badms: 120
+  latency: 225
 --- !u!1 &951757623
 GameObject:
   m_ObjectHideFlags: 0

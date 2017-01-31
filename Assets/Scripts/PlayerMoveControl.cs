@@ -7,7 +7,6 @@ public class PlayerMoveControl : MonoBehaviour {
     InputManager inputManager;
 
     private bool _isJumping = false;
-
     private GridPos _jumpGrid;
     private Vector2 _direction;
     private float _speed;
@@ -17,25 +16,18 @@ public class PlayerMoveControl : MonoBehaviour {
 
     }
 
+    public void ReadyToJump()
+    {
+        _isJumping = true;
+        _jumpGrid = inputManager.jumpGrid;
+
+        int gridDiff = (int)_jumpGrid - (int)StepManager.instance.cur.GetComponent<StepInfo>().xGrid;
+        _direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;
+        _speed = _direction.magnitude / GameManager.instance.musicInfo.GetMsPerBeat() * 1000 * Time.deltaTime;
+    }
+
     void Update()
     {
-        if(inputManager.isJumpButtonPressed)
-        {
-            Debug.Log(JudgeManager.instance.judge);
-        }
-        if(JudgeManager.instance.judge != JudgeManager.JudgeList.Miss && inputManager.isJumpButtonPressed)
-        {
-            _isJumping = true;
-            _jumpGrid = inputManager.jumpGrid;
-
-            int gridDiff = (int)_jumpGrid - (int)StepManager.instance.cur.GetComponent<StepInfo>().xGrid;
-            _direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;
-            _speed = _direction.magnitude / GameManager.instance.musicInfo.GetMsPerBeat() * 1000 * Time.deltaTime;
-        }
-        else if(JudgeManager.instance.judge == JudgeManager.JudgeList.Miss)
-        {
-            inputManager.isJumpButtonPressed = false;
-        }
         if(_isJumping)
         {
             gameObject.transform.Translate(_direction.normalized * _speed);
@@ -43,7 +35,6 @@ public class PlayerMoveControl : MonoBehaviour {
             {
                 gameObject.transform.position = (Vector2)StepManager.instance.cur.transform.position + _direction;
                 _isJumping = false;
-                inputManager.isJumpButtonPressed = false;
                 GameManager.instance.JumpFinished(_jumpGrid == StepManager.instance.next.GetComponent<StepInfo>().xGrid);
             }
         }

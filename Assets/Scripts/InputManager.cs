@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
         // This if for PC
         /*
         jumpGrid = _JumpGrid();
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             isJumpButtonPressed = true;
         }
