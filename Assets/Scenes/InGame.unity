@@ -102,8 +102,9 @@ GameObject:
   - component: {fileID: 107210804}
   - component: {fileID: 107210803}
   - component: {fileID: 107210802}
+  - component: {fileID: 107210805}
   m_Layer: 5
-  m_Name: Jump Button Center
+  m_Name: Jump Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,6 +203,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 107210800}
+--- !u!114 &107210805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 107210800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f4ba066d0ce094ab2af5d17a6cd4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 1993326186}
 --- !u!1 &119266885
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,8 +376,9 @@ GameObject:
   - component: {fileID: 834102253}
   - component: {fileID: 834102252}
   - component: {fileID: 834102251}
+  - component: {fileID: 834102254}
   m_Layer: 5
-  m_Name: Jump Button Left
+  m_Name: Left Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,6 +477,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 834102249}
+--- !u!114 &834102254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 834102249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf2dc249181de54ba9df55bc4a52239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 1993326186}
 --- !u!1 &905901042
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +617,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u25B2"
+  m_Text: "\u25B6"
 --- !u!222 &951757626
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -842,8 +868,9 @@ GameObject:
   - component: {fileID: 1462871614}
   - component: {fileID: 1462871613}
   - component: {fileID: 1462871612}
+  - component: {fileID: 1462871615}
   m_Layer: 5
-  m_Name: Jump Button Right
+  m_Name: Right Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -942,6 +969,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1462871610}
+--- !u!114 &1462871615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1462871610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010adccb521a73b49829767b7bceec7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 1993326186}
 --- !u!1 &1801551280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1110,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u25B2"
+  m_Text: "\u25C0"
 --- !u!222 &1810696411
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1182,9 +1221,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61192f81702af546b4d5aac4bf15bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftJumpButton: {fileID: 834102251}
-  CenterJumpButton: {fileID: 107210802}
-  RightJumpButton: {fileID: 1462871612}
+  LeftButton: {fileID: 834102251}
+  JumpButton: {fileID: 107210802}
+  RightButton: {fileID: 1462871612}
+  isJumpButtonPressed: 0
+  jumpGrid: 0
 --- !u!4 &1993326187
 Transform:
   m_ObjectHideFlags: 0

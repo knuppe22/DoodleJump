@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
     [SerializeField]
-    Button LeftJumpButton;
+    Button LeftButton;
     [SerializeField]
-    Button CenterJumpButton;
+    Button JumpButton;
     [SerializeField]
-    Button RightJumpButton;
+    Button RightButton;
 
-    public GridPos _JumpGrid()
+    public bool isJumpButtonPressed = false;
+    public GridPos jumpGrid = GridPos.Center;
+
+    // This is for PC
+    /*
+    private GridPos _JumpGrid()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
             return GridPos.Left;
@@ -21,6 +27,7 @@ public class InputManager : MonoBehaviour
         else
             return GridPos.Center;
     }
+    */
 
     // Use this for initialization
     void Start () {
@@ -29,6 +36,13 @@ public class InputManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		// TODO: Read from button and return result in _JumpGrid
+        // This if for PC
+        /*
+        jumpGrid = _JumpGrid();
+        if (Input.GetKey(KeyCode.Space))
+        {
+            isJumpButtonPressed = true;
+        }
+        */
 	}
 }
