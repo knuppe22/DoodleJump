@@ -76,7 +76,7 @@ public class JudgeManager : MonoBehaviour {
             }
             else
             {
-                //life--;
+                GameManager.instance.life--;
             }
         }
     }
