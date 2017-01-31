@@ -3,9 +3,6 @@ using System.Collections;
 using System;
 
 public class PlayerMoveControl : MonoBehaviour {
-    [SerializeField]
-    InputManager inputManager;
-
     private bool _isJumping = false;
     private GridPos _jumpGrid;
     private Vector2 _direction;
@@ -19,7 +16,7 @@ public class PlayerMoveControl : MonoBehaviour {
     public void ReadyToJump()
     {
         _isJumping = true;
-        _jumpGrid = inputManager.jumpGrid;
+        _jumpGrid = InputManager.instance.jumpGrid;
 
         int gridDiff = (int)_jumpGrid - (int)StepManager.instance.cur.GetComponent<StepInfo>().xGrid;
         _direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;

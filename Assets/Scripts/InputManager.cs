@@ -6,12 +6,7 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField]
-    Button LeftButton;
-    [SerializeField]
-    Button JumpButton;
-    [SerializeField]
-    Button RightButton;
+    public static InputManager instance;
 
     public bool isJumpButtonPressed = false;
     public GridPos jumpGrid = GridPos.Center;
@@ -31,8 +26,15 @@ public class InputManager : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-		
-	}
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
