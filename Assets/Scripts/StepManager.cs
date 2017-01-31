@@ -10,6 +10,7 @@ public class StepManager : MonoBehaviour {
     public GameObject cur;
     public GameObject next;
     public GameObject nnext;
+    // TODO: Two steps with same height
 
     // Use this for initialization
     void Start () {
