@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class JudgeManager : MonoBehaviour {
     [SerializeField]
@@ -9,11 +11,17 @@ public class JudgeManager : MonoBehaviour {
     GameObject player;
 
     public static JudgeManager instance;
-    public enum JudgeList { Poor, Bad, Perfect };
-    public JudgeList judge;
-    
-    public float perfectms = 80f;
-    public float badms = 120f;
+
+    public enum JudgeList
+    {
+        Perfect,
+        Good,
+        Bad,
+        Poor
+    };
+    public readonly float[] judgeTiming = { 80f, 100f, 120f, 300f };
+    public readonly int[] judgeScores = { 10, 7, 3, 0 };
+
     public float latency = 225f;
     public float elapsedTime = 0;
 
@@ -29,22 +37,21 @@ public class JudgeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        JudgeList judge = JudgeList.Poor;
+
         elapsedTime += Time.deltaTime * 1000;
 
-        if (Mathf.Abs(elapsedTime) < perfectms)
+        foreach (JudgeList j in Enum.GetValues(typeof(JudgeList)))
         {
-            judge = JudgeList.Perfect;
-        }
-        else if (Mathf.Abs(elapsedTime) < badms)
-        {
-            judge = JudgeList.Bad;
-        }
-        else
-        {
-            judge = JudgeList.Poor;
+            if (Mathf.Abs(elapsedTime) < judgeTiming[(int)j])
+            {
+                judge = j;
+                GameManager.Instance.JudgeScore += judgeScores[(int)j];
+                break;
+            }
         }
 
-        if (elapsedTime > badms)
+        if (elapsedTime > judgeTiming[(int)JudgeList.Poor])
         {
             GameManager.Instance.MissJudge();
             elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
@@ -58,12 +65,12 @@ public class JudgeManager : MonoBehaviour {
         {
             Debug.Log(judge + " (" + elapsedTime +")");
 
-            if(judge != JudgeList.Poor)
+            if (judge != JudgeList.Poor)
             {
                 elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             }
 
-            if (judge == JudgeList.Perfect)
+            if (new[] { JudgeList.Perfect, JudgeList.Good }.Contains(judge))
             {
                 player.GetComponent<PlayerMoveControl>().ReadyToJump();
             }

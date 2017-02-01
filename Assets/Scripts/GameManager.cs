@@ -19,10 +19,11 @@ public class GameManager : MonoBehaviour
     InputManager InputManagerInstance;
 
     public int life = 3;
-    public int score = 0;
+    private int height = 0;
     private int combo = 0;
+    private int judgeScore = 0;
     private int lastCombo = 0;
-    private int maxCombo = 0;
+
     private bool isGameOver = false;
 
     public static GameManager Instance
@@ -44,15 +45,25 @@ public class GameManager : MonoBehaviour
     }
     public float MsOffset { get { return musicInfo.offsetms; } }
 
+    public int JudgeScore
+    {
+        get { return judgeScore; }
+        set
+        {
+            judgeScore = value;
+        }
+    }
     public int Combo
     {
         get { return combo; }
         set
         {
             combo = value;
-            if (combo > maxCombo)
-                maxCombo = combo;
         }
+    }
+    public int Score
+    {
+        get { return Combo * 5 + height * 100 + JudgeScore; }
     }
 
     // public enum StepType { Normal, Double, Hold, ... };  // 추후에 추가바람(StepInfo.cs:8)
@@ -78,7 +89,8 @@ public class GameManager : MonoBehaviour
     public void IncrementCombo()
     {
         Combo++;
-        score += 100;
+        height++;
+        JudgeScore += 100;
     }
 
     public void ResetCombo()
@@ -130,14 +142,16 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("LastCombo=" + lastCombo);
-        score += lastCombo * 5;
+//        score += lastCombo * 5;
 
         Destroy(GameObject.Find("Life Text"));
         Destroy(GameObject.Find("Judge Line"));
         Destroy(musicObj);
 
         GameObject.Find("Game Over Text").GetComponent<Text>().text
-            = "Game Over\n\nScore: " + score + "\n\n"
-            + "Touch to restart";
+            = "Game Over\n\nScore: " + Score
+            + "\n\n"
+            + "Press Jump\n"
+            + "to restart";
     }
 }
