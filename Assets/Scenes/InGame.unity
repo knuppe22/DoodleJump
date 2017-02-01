@@ -771,6 +771,7 @@ MonoBehaviour:
   season: 0
   music: {fileID: 1805843841355522, guid: f5ab7668ef957b44286275395d1de142, type: 2}
   musicInfo: {fileID: 0}
+  InputManagerInstance: {fileID: 0}
   life: 10
   score: 0
 --- !u!4 &905901044
@@ -804,7 +805,7 @@ MonoBehaviour:
   judge: 0
   perfectms: 80
   badms: 120
-  latency: 225
+  latency: 210
   elapsedTime: 0
 --- !u!1 &951757623
 GameObject:

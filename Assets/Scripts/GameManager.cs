@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +13,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject music;
     private GameObject musicObj;
-    public MusicInfo musicInfo;
+    private MusicInfo musicInfo;
+
+    [SerializeField]
+    InputManager InputManagerInstance;
 
     public int life = 3;
     public int score = 0;
@@ -38,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         get { return 60 * 1000 * 1f / musicInfo.bpm; }
     }
+    public float MsOffset { get { return musicInfo.offsetms; } }
 
     public int Combo
     {
@@ -108,6 +113,17 @@ public class GameManager : MonoBehaviour
         {
             IsGameOver();
         }
+        else if (isGameOver)
+        {
+            bool isJumpButtonPressed;
+            InputManagerInstance.GetJumpButtonPressed(out isJumpButtonPressed);
+
+            if (isJumpButtonPressed)
+            {
+                int scene = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(scene, LoadSceneMode.Single);
+            }
+        }
     }
 
     void IsGameOver()
@@ -115,9 +131,13 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Debug.Log("LastCombo=" + lastCombo);
         score += lastCombo * 5;
-        Destroy(GameObject.Find("Life Indicator"));
+
+        Destroy(GameObject.Find("Life Text"));
+        Destroy(GameObject.Find("Judge Line"));
         Destroy(musicObj);
+
         GameObject.Find("Game Over Text").GetComponent<Text>().text
-            = "Game Over\n\nScore: " + score;
+            = "Game Over\n\nScore: " + score + "\n\n"
+            + "Touch to restart";
     }
 }

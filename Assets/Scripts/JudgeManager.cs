@@ -23,7 +23,7 @@ public class JudgeManager : MonoBehaviour {
     void Start ()
     {
         instance = this;
-        elapsedTime -= GameManager.Instance.musicInfo.offsetms + latency;
+        elapsedTime -= GameManager.Instance.MsOffset + latency;
     }
 	
 	// Update is called once per frame

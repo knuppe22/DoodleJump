@@ -33,8 +33,6 @@ public class JudgeLine : MonoBehaviour
 
     void DrawCircle(float radius)
     {
-        Debug.Log(basey);
-
         float theta = 0f;
         int size = (int)((1f / ThetaScale) + 1f);
 
