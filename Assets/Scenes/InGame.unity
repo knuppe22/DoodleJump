@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f4ba066d0ce094ab2af5d17a6cd4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputManagerInstance: {fileID: 1993326186}
 --- !u!1 &119266885
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf2dc249181de54ba9df55bc4a52239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputManagerInstance: {fileID: 1993326186}
 --- !u!1 &905901042
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +594,7 @@ MonoBehaviour:
   season: 0
   music: {fileID: 1805843841355522, guid: f5ab7668ef957b44286275395d1de142, type: 2}
   musicInfo: {fileID: 0}
-  life: 3
+  life: 10
   score: 0
   combo: 0
 --- !u!4 &905901044
@@ -621,6 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f288c97e92e8db24687b0a92d35e610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputManagerInstance: {fileID: 1993326186}
   player: {fileID: 1904722080}
   judge: 0
   perfectms: 80
@@ -1057,6 +1060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010adccb521a73b49829767b7bceec7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputManagerInstance: {fileID: 1993326186}
 --- !u!1 &1801551280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,6 +1225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7024551a19b76e34c9f001063482943c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputManagerInstance: {fileID: 1993326186}
 --- !u!212 &1904722082
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1296,8 +1301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61192f81702af546b4d5aac4bf15bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isJumpButtonPressed: 0
-  jumpGrid: 0
+  isJumpButtonPressed_: 0
+  jumpGrid_: 0
 --- !u!4 &1993326187
 Transform:
   m_ObjectHideFlags: 0

@@ -3,16 +3,24 @@ using System.Collections;
 using System;
 
 public class PlayerMoveControl : MonoBehaviour {
+    [SerializeField]
+    InputManager InputManagerInstance;
+
     private bool isJumping = false;
     private GridPos jumpGrid;
     private Vector3 direction;
     private float speed;
 
+    void Start()
+    {
+
+    }
+
     public void ReadyToJump()
     {
-        isJumping = true;
+        InputManagerInstance.GetJumpGrid(out jumpGrid);
 
-        jumpGrid = InputManager.Instance.jumpGrid;
+        isJumping = true;
 
         int gridDiff = (int)jumpGrid - (int)StepManager.Instance.CurrentGrid;
         direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;

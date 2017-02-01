@@ -56,8 +56,7 @@ public class GameManager : MonoBehaviour
     {
         if (isJumpSucceeded)
         {
-            Combo++;
-            score += 100;
+            IncrementCombo();
             GameObject.Find("Main Camera").transform.Translate(new Vector2(0, 1f));
             StepManager.Instance.NextStep();
         }
@@ -67,6 +66,12 @@ public class GameManager : MonoBehaviour
             ResetCombo();
             IsGameOver();
         }
+    }
+
+    public void IncrementCombo()
+    {
+        Combo++;
+        score += 100;
     }
 
     public void ResetCombo()

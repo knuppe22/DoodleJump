@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class JudgeManager : MonoBehaviour {
     [SerializeField]
-    public GameObject player;
+    InputManager InputManagerInstance;
+    [SerializeField]
+    GameObject player;
 
     public static JudgeManager instance;
     public enum JudgeList { Poor, Bad, Perfect };
@@ -14,6 +16,8 @@ public class JudgeManager : MonoBehaviour {
     public float badms = 120f;
     public float latency = 225f;
     private float elapsedTime = 0;
+
+    private bool isJumpButtonPressedPrev = false;
 
     // Use this for initialization
     void Start ()
@@ -45,8 +49,11 @@ public class JudgeManager : MonoBehaviour {
             elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             Debug.Log("Miss");
         }
-
-        if (InputManager.Instance.isJumpButtonPressed)
+        
+        bool isJumpButtonPressed;
+        InputManagerInstance.GetJumpButtonPressed(out isJumpButtonPressed);
+        
+        if (isJumpButtonPressed && !isJumpButtonPressedPrev)
         {
             Debug.Log(judge + " (" + elapsedTime +")");
 
@@ -54,7 +61,6 @@ public class JudgeManager : MonoBehaviour {
             {
                 elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             }
-            InputManager.Instance.isJumpButtonPressed = false;
 
             if (judge == JudgeList.Perfect)
             {
@@ -66,5 +72,6 @@ public class JudgeManager : MonoBehaviour {
                 GameManager.Instance.life--;
             }
         }
+        isJumpButtonPressedPrev = isJumpButtonPressed;
     }
 }

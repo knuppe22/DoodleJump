@@ -6,35 +6,53 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager instance = null;
-    public static InputManager Instance
-    {
-        get
-        {
-            if(instance == null)
-            {
-                instance = FindObjectOfType<InputManager>();
-            }
+    public bool isJumpButtonPressed_ = false;
+    public GridPos jumpGrid_ = GridPos.Center;
 
-            return instance;
+    public void GetJumpGrid(out GridPos jumpGrid)
+    {
+#if UNITY_STANDALONE || UNITY_EDITOR
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            jumpGrid = GridPos.Left;
         }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            jumpGrid = GridPos.Right;
+        }
+        else
+        {
+            jumpGrid = GridPos.Center;
+        }
+#elif UNITY_ANDROID
+        jumpGrid = jumpGrid_;
+#else
+        // TODO: not cared platform
+#endif
+
+        return;
     }
 
-    public bool isJumpButtonPressed = false;
-    public GridPos jumpGrid = GridPos.Center;
+    public void GetJumpButtonPressed(out bool isJumpButtonPressed)
+    {
+#if UNITY_STANDALONE || UNITY_EDITOR
+        isJumpButtonPressed = Input.GetKeyDown(KeyCode.Space);
+#elif UNITY_ANDROID
+        isJumpButtonPressed = isJumpButtonPressed_;
+#else
+        // TODO: not cared platform
+#endif
 
-    // For PC use
+        return;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-            isJumpButtonPressed = true;
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-            jumpGrid = GridPos.Left;
-        else if (Input.GetKey(KeyCode.RightArrow))
-            jumpGrid = GridPos.Right;
-        else
-            jumpGrid = GridPos.Center;
     }
-
 }

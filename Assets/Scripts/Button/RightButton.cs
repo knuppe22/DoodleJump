@@ -5,13 +5,16 @@ using UnityEngine.EventSystems;
 
 public class RightButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField]
+    InputManager InputManagerInstance;
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        InputManager.Instance.jumpGrid++;
+        InputManagerInstance.jumpGrid_ = GridPos.Right;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        InputManager.Instance.jumpGrid--;
+        InputManagerInstance.jumpGrid_ = GridPos.Center;
     }
 }
