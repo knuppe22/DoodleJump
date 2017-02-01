@@ -57,7 +57,9 @@ public class GameManager : MonoBehaviour
         if (isJumpSucceeded)
         {
             IncrementCombo();
+
             GameObject.Find("Main Camera").transform.Translate(new Vector2(0, 1f));
+            JudgeLine.instance.IncreaseY(1f);
             StepManager.Instance.NextStep();
         }
         else

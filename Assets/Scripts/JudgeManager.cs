@@ -15,13 +15,14 @@ public class JudgeManager : MonoBehaviour {
     public float perfectms = 80f;
     public float badms = 120f;
     public float latency = 225f;
-    private float elapsedTime = 0;
+    public float elapsedTime = 0;
 
     private bool isJumpButtonPressedPrev = false;
 
     // Use this for initialization
     void Start ()
     {
+        instance = this;
         elapsedTime -= GameManager.Instance.musicInfo.offsetms + latency;
     }
 	
