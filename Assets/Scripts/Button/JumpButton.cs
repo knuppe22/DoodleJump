@@ -7,6 +7,6 @@ public class JumpButton : MonoBehaviour, IPointerDownHandler
 {
     public void OnPointerDown(PointerEventData eventData)
     {
-        InputManager.instance.isJumpButtonPressed = true;
+        InputManager.Instance.isJumpButtonPressed = true;
     }
 }

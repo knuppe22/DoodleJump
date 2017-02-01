@@ -7,11 +7,11 @@ public class LeftButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public void OnPointerDown(PointerEventData eventData)
     {
-        InputManager.instance.jumpGrid--;
+        InputManager.Instance.jumpGrid--;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        InputManager.instance.jumpGrid++;
+        InputManager.Instance.jumpGrid++;
     }
 }

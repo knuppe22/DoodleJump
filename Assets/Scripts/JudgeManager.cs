@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class JudgeManager : MonoBehaviour {
     [SerializeField]
-    GameObject player;
+    public GameObject player;
 
     public static JudgeManager instance;
     public enum JudgeList { Poor, Bad, Perfect };
@@ -13,39 +13,24 @@ public class JudgeManager : MonoBehaviour {
     public float perfectms = 80f;
     public float badms = 120f;
     public float latency = 225f;
-    private float _elapsedTime = 0;
+    private float elapsedTime = 0;
 
     // Use this for initialization
     void Start ()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-        /*
-        if (GameManager.instance.musicInfo.offsetms > 0)
-        {
-            _elapsedTime = (-1 * GameManager.instance.musicInfo.offsetms) % GameManager.instance.musicInfo.GetMsPerBeat() + GameManager.instance.musicInfo.GetMsPerBeat();
-        }
-        */
-        _elapsedTime -= GameManager.instance.musicInfo.offsetms;
-        _elapsedTime -= latency;
+        elapsedTime -= GameManager.Instance.musicInfo.offsetms + latency;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        _elapsedTime += Time.deltaTime * 1000;
+        elapsedTime += Time.deltaTime * 1000;
 
-        if (Mathf.Abs(_elapsedTime) < perfectms)
+        if (Mathf.Abs(elapsedTime) < perfectms)
         {
             judge = JudgeList.Perfect;
         }
-        else if (Mathf.Abs(_elapsedTime) < badms)
+        else if (Mathf.Abs(elapsedTime) < badms)
         {
             judge = JudgeList.Bad;
         }
@@ -54,21 +39,22 @@ public class JudgeManager : MonoBehaviour {
             judge = JudgeList.Poor;
         }
 
-        if (_elapsedTime > badms)
+        if (elapsedTime > badms)
         {
-            GameManager.instance.MissJudge();
-            _elapsedTime -= 2 * GameManager.instance.musicInfo.GetMsPerBeat();
+            GameManager.Instance.MissJudge();
+            elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             Debug.Log("Miss");
         }
 
-        if (InputManager.instance.isJumpButtonPressed)
+        if (InputManager.Instance.isJumpButtonPressed)
         {
-            Debug.Log(judge + " (" + _elapsedTime +")");
+            Debug.Log(judge + " (" + elapsedTime +")");
+
             if(judge != JudgeList.Poor)
             {
-                _elapsedTime -= 2 * GameManager.instance.musicInfo.GetMsPerBeat();
+                elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             }
-            InputManager.instance.isJumpButtonPressed = false;
+            InputManager.Instance.isJumpButtonPressed = false;
 
             if (judge == JudgeList.Perfect)
             {
@@ -76,8 +62,8 @@ public class JudgeManager : MonoBehaviour {
             }
             else
             {
-                GameManager.instance.ResetCombo();
-                GameManager.instance.life--;
+                GameManager.Instance.ResetCombo();
+                GameManager.Instance.life--;
             }
         }
     }

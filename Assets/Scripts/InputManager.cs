@@ -6,45 +6,35 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager instance;
+    private static InputManager instance = null;
+    public static InputManager Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<InputManager>();
+            }
+
+            return instance;
+        }
+    }
 
     public bool isJumpButtonPressed = false;
     public GridPos jumpGrid = GridPos.Center;
 
-    // This is for PC
-    /*
-    private GridPos _JumpGrid()
+    // For PC use
+    void Update()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
-            return GridPos.Left;
-        else if (Input.GetKey(KeyCode.RightArrow))
-            return GridPos.Right;
-        else
-            return GridPos.Center;
-    }
-    */
-
-    // Use this for initialization
-    void Start () {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        // This if for PC
-        /*
-        jumpGrid = _JumpGrid();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        if(Input.GetKeyDown(KeyCode.Space))
             isJumpButtonPressed = true;
-        }
-        */
-	}
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+            jumpGrid = GridPos.Left;
+        else if (Input.GetKey(KeyCode.RightArrow))
+            jumpGrid = GridPos.Right;
+        else
+            jumpGrid = GridPos.Center;
+    }
+
 }

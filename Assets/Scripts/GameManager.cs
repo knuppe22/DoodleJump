@@ -5,28 +5,61 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    private static GameManager instance;
+
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public Seasons season = Seasons.Spring;
+
     public GameObject music;
-    private GameObject _musicObj;
+    private GameObject musicObj;
     public MusicInfo musicInfo;
+
     public int life = 3;
     public int score = 0;
-    public int combo = 0;
-    private int _lastCombo = 0;
-    private bool _isGameOver = false;
+    private int combo = 0;
+    private int lastCombo = 0;
+    private int maxCombo = 0;
+    private bool isGameOver = false;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<GameManager>();
+            }
+
+            return instance;
+        }
+    }
+
+    public float MsPerBeat
+    {
+        get { return 60 * 1000 * 1f / musicInfo.bpm; }
+    }
+
+    public int Combo
+    {
+        get { return combo; }
+        set
+        {
+            combo = value;
+            if (combo > maxCombo)
+                maxCombo = combo;
+        }
+    }
 
     // public enum StepType { Normal, Double, Hold, ... };  // 추후에 추가바람(StepInfo.cs:8)
 
     public void JumpFinished(bool isJumpSucceeded)
     {
-        if (isJumpSucceeded == true)
+        if (isJumpSucceeded)
         {
-            combo++;
+            Combo++;
             score += 100;
             GameObject.Find("Main Camera").transform.Translate(new Vector2(0, 1f));
-            StepManager.instance.NextStep();
+            StepManager.Instance.NextStep();
         }
         else
         {
@@ -38,8 +71,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetCombo()
     {
-        _lastCombo = combo;
-        combo = 0;
+        lastCombo = Combo;
+        Combo = 0;
     }
 
     public void MissJudge()
@@ -51,15 +84,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-        _musicObj = Instantiate(music);
+        musicObj = Instantiate(music);
         musicInfo = music.GetComponent<MusicInfo>();
     }
 
@@ -72,7 +97,7 @@ public class GameManager : MonoBehaviour
             scoreText.GetComponent<Text>().text = "Life: " + life;
         }
 
-        if (!_isGameOver && life < 0)
+        if (!isGameOver && life < 0)
         {
             IsGameOver();
         }
@@ -80,11 +105,12 @@ public class GameManager : MonoBehaviour
 
     void IsGameOver()
     {
-        _isGameOver = true;
-        Debug.Log("LastCombo=" + _lastCombo);
-        score += _lastCombo * 5;
-        Destroy(GameObject.Find("Life Text"));
-        Destroy(_musicObj);
-        GameObject.Find("Game Over Text").GetComponent<Text>().text = "Game Over\n\nScore: " + score;
+        isGameOver = true;
+        Debug.Log("LastCombo=" + lastCombo);
+        score += lastCombo * 5;
+        Destroy(GameObject.Find("Life Indicator"));
+        Destroy(musicObj);
+        GameObject.Find("Game Over Text").GetComponent<Text>().text
+            = "Game Over\n\nScore: " + score;
     }
 }

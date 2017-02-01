@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class RightButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
-{public void OnPointerDown(PointerEventData eventData)
+{
+    public void OnPointerDown(PointerEventData eventData)
     {
-        InputManager.instance.jumpGrid++;
+        InputManager.Instance.jumpGrid++;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        InputManager.instance.jumpGrid--;
+        InputManager.Instance.jumpGrid--;
     }
 }

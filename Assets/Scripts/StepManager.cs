@@ -3,38 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StepManager : MonoBehaviour {
-    public static StepManager instance;
+    private static StepManager instance;
     public GameObject step;
 
-    public GameObject prev;
-    public GameObject cur;
-    public GameObject next;
-    public GameObject nnext;
+    private GameObject prev;
+    private GameObject cur;
+    private GameObject next;
+    private GameObject nnext;
+
+    public static StepManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<StepManager>();
+            }
+
+            return instance;
+        }
+    }
+
+    public GridPos CurrentGrid
+    {
+        get { return cur.GetComponent<StepInfo>().xGrid; }
+    }
+    public GridPos NextGrid
+    {
+        get { return next.GetComponent<StepInfo>().xGrid; }
+    }
+
+    public Vector3 CurrentPosition
+    {
+        get { return cur.transform.position; }
+    }
+    public Vector3 NextPosition
+    {
+        get { return next.transform.position; }
+    }
+
+
     // TODO: Two steps with same height
 
     // Use this for initialization
-    void Start () {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+    void Start()
+    {
         cur = Instantiate(step, Vector3.zero, Quaternion.identity);
         Spawn(ref next, ref cur);
         Spawn(ref nnext, ref next);
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void NextStep()
     {
-        if(prev != null)
+        if (prev != null)
         {
             Destroy(prev);
         }
