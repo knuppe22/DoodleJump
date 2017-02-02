@@ -10,10 +10,10 @@ public class JudgeLine : MonoBehaviour
 
     private float ThetaScale = 0.001f;
 
-    public float radius;
-    public float width;
-    
-    private float basey = -1.5f;
+    private float basex;
+    private float basey;
+
+    public float offset = 0f;
 
     public void IncreaseY(float y)
     {
@@ -25,10 +25,15 @@ public class JudgeLine : MonoBehaviour
         instance = this;
 
         LineDrawer = GetComponent<LineRenderer>();
-        LineDrawer.material = new Material(Shader.Find("Particles/Additive"));
         LineDrawer.startColor = Color.grey;
         LineDrawer.endColor = Color.grey;
-        LineDrawer.startWidth = width;
+        
+        Vector3 worldPoint;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            GetComponent<RectTransform>(),
+            gameObject.transform.position, Camera.main, out worldPoint);
+        basex = worldPoint.x;
+        basey = worldPoint.y;
     }
 
     void DrawCircle(float radius)
@@ -41,7 +46,7 @@ public class JudgeLine : MonoBehaviour
         for (int i = 0; i <= size; i++)
         {
             theta += (2.0f * Mathf.PI * ThetaScale);
-            float x = radius * Mathf.Cos(theta);
+            float x = radius * Mathf.Cos(theta) + basex;
             float y = radius * Mathf.Sin(theta) + basey;
             LineDrawer.SetPosition(i, new Vector3(x, y, 0));
         }
@@ -49,6 +54,6 @@ public class JudgeLine : MonoBehaviour
 
     void Update()
     {
-        DrawCircle((1000-JudgeManager.instance.elapsedTime)/4000f);
+        DrawCircle((1000-JudgeManager.instance.elapsedTime + offset)/4000f);
     }
 }
