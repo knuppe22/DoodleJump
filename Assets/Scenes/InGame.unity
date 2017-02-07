@@ -1477,6 +1477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isJumpButtonPressed_: 0
   jumpGrid_: 0
+  threshold: 0.2
 --- !u!4 &1993326187
 Transform:
   m_ObjectHideFlags: 0

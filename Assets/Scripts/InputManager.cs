@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     public bool isJumpButtonPressed_ = false;
     public GridPos jumpGrid_ = GridPos.Center;
 
+    public float threshold = 0.2f;
+
     public void GetJumpGrid(out GridPos jumpGrid)
     {
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -29,6 +31,13 @@ public class InputManager : MonoBehaviour
 #else
         // TODO: not cared platform
 #endif
+
+        float acx = Input.acceleration.x;
+
+        if (Mathf.Abs(acx) > threshold)
+        {
+            jumpGrid = (GridPos)Mathf.Sign(acx);
+        }
 
         return;
     }
