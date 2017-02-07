@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private int height = 0;
     private int combo = 0;
     private int judgeScore = 0;
-    private int lastCombo = 0;
+    private int maxCombo = 0;
 
     private bool isGameOver = false;
 
@@ -59,11 +59,18 @@ public class GameManager : MonoBehaviour
         set
         {
             combo = value;
+
+            if (value > maxCombo)
+                maxCombo = value;
         }
+    }
+    public int MaxCombo
+    {
+        get { return maxCombo; }
     }
     public int Score
     {
-        get { return Combo * 5 + height * 100 + JudgeScore; }
+        get { return MaxCombo * 5 + height * 100 + JudgeScore; }
     }
 
     // public enum StepType { Normal, Double, Hold, ... };  // 추후에 추가바람(StepInfo.cs:8)
@@ -73,6 +80,7 @@ public class GameManager : MonoBehaviour
         if (isJumpSucceeded)
         {
             IncrementCombo();
+            GameObject.Find("Score").GetComponent<Text>().text = Score.ToString();
 
             GameObject.Find("Main Camera").transform.Translate(new Vector2(0, 1f));
             JudgeLine.instance.IncreaseY(1f);
@@ -95,7 +103,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetCombo()
     {
-        lastCombo = Combo;
         Combo = 0;
     }
 
@@ -141,11 +148,10 @@ public class GameManager : MonoBehaviour
     void IsGameOver()
     {
         isGameOver = true;
-        Debug.Log("LastCombo=" + lastCombo);
-//        score += lastCombo * 5;
 
         Destroy(GameObject.Find("Life Text"));
         Destroy(GameObject.Find("Judge Line"));
+        Destroy(GameObject.Find("Score"));
         Destroy(musicObj);
 
         GameObject.Find("Game Over Text").GetComponent<Text>().text
