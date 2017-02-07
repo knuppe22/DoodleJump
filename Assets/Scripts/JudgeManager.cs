@@ -31,6 +31,7 @@ public class JudgeManager : MonoBehaviour {
     void Start ()
     {
         instance = this;
+        latency = Launcher.latency;
         elapsedTime -= GameManager.Instance.MsOffset + latency;
     }
 	
