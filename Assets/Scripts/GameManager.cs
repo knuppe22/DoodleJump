@@ -75,6 +75,12 @@ public class GameManager : MonoBehaviour
 
     // public enum StepType { Normal, Double, Hold, ... };  // 추후에 추가바람(StepInfo.cs:8)
 
+    private bool isMoving = false;
+
+    private float camAcc = 10f;
+    private float camSpeed = 0f;
+    private float camMoved = 0f;
+
     public void JumpFinished(bool isJumpSucceeded)
     {
         if (isJumpSucceeded)
@@ -82,8 +88,13 @@ public class GameManager : MonoBehaviour
             IncrementCombo();
             GameObject.Find("Score").GetComponent<Text>().text = Score.ToString();
 
+            isMoving = true;
+
+            /*
             GameObject.Find("Main Camera").transform.Translate(new Vector2(0, 1f));
             JudgeLine.instance.IncreaseY(1f);
+            */
+
             StepManager.Instance.NextStep();
         }
         else
@@ -117,6 +128,32 @@ public class GameManager : MonoBehaviour
     {
         musicObj = Instantiate(music);
         musicInfo = music.GetComponent<MusicInfo>();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isMoving)
+        {
+            if (camMoved >= 1f)
+            {
+                camSpeed = 0f;
+                camMoved = 0f;
+                isMoving = false;
+
+                StepManager.Instance.DestroyPrevStep();
+            }
+            else if (camMoved <= 0.5f)
+                camSpeed += camAcc * Time.deltaTime;
+            else
+                camSpeed -= camAcc * Time.deltaTime;
+
+            GameObject.Find("Main Camera").transform.Translate(new Vector2(0, camSpeed * Time.deltaTime));
+            JudgeLine.instance.IncreaseY(camSpeed * Time.deltaTime);
+
+            camMoved += camSpeed * Time.deltaTime;
+
+            StepManager.Instance.DestroyPrevStep();
+        }
     }
 
     // Update is called once per frame

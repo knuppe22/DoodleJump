@@ -27,17 +27,19 @@ public class InputManager : MonoBehaviour
             jumpGrid = GridPos.Center;
         }
 #elif UNITY_ANDROID
-        jumpGrid = jumpGrid_;
-#else
-        // TODO: not cared platform
-#endif
-
         float acx = Input.acceleration.x;
 
         if (Mathf.Abs(acx) > threshold)
         {
             jumpGrid = (GridPos)Mathf.Sign(acx);
         }
+        else
+        {
+            jumpGrid = jumpGrid_;
+        }
+#else
+        // TODO: not cared platform
+#endif
 
         return;
     }

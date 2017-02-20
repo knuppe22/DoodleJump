@@ -8,7 +8,7 @@ public class JudgeLine : MonoBehaviour
 
     public static JudgeLine instance;
 
-    private float ThetaScale = 0.001f;
+    private float ThetaScale = 0.01f;
 
     private float basex;
     private float basey;

@@ -10,6 +10,7 @@ public class StepManager : MonoBehaviour {
     private GameObject cur;
     private GameObject next;
     private GameObject nnext;
+    private GameObject nnnext;
 
     public static StepManager Instance
     {
@@ -51,18 +52,33 @@ public class StepManager : MonoBehaviour {
         cur = Instantiate(step, Vector3.zero, Quaternion.identity);
         Spawn(ref next, ref cur);
         Spawn(ref nnext, ref next);
+        Spawn(ref nnnext, ref nnext);
     }
 	
     public void NextStep()
     {
-        if (prev != null)
-        {
-            Destroy(prev);
-        }
         prev = cur;
         cur = next;
         next = nnext;
-        Spawn(ref nnext, ref next);
+        nnext = nnnext;
+        Spawn(ref nnnext, ref nnext);
+    }
+
+    public void DestroyPrevStep()
+    {
+        if (prev != null)
+        {
+            Color c = prev.GetComponent<SpriteRenderer>().color;
+
+            if (c.a > 0)
+            {
+                prev.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, c.a - Time.deltaTime * 3f);
+            }
+            else
+            {
+                Destroy(prev);
+            }
+        }
     }
 
     public void Spawn(ref GameObject over, ref GameObject under)
