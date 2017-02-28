@@ -154,10 +154,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject scoreText = GameObject.Find("Life Text");
-        if(scoreText != null)
+        GameObject lifeText = GameObject.Find("Life Text");
+        if(lifeText != null)
         {
-            scoreText.GetComponent<Text>().text = "Life: " + life;
+            lifeText.GetComponent<Text>().text = "X " + life;
         }
 
         if (!isGameOver && life < 0)

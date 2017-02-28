@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212270285654322216}
   - component: {fileID: 114878915493690174}
   m_Layer: 0
-  m_Name: Spring Step
+  m_Name: Step
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
