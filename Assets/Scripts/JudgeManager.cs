@@ -3,26 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 
 public class JudgeManager : MonoBehaviour {
     [SerializeField]
     InputManager InputManagerInstance;
     [SerializeField]
     GameObject player;
+    [SerializeField]
+    GameObject judgeObject;
+
+    Text judgeText;
+
+    private PlayerMoveControl playerControl;
 
     public static JudgeManager instance;
 
     public enum JudgeList
     {
         Perfect,
-        Good,
+        Great,
         Bad,
         Poor
     };
-    public readonly float[] judgeTiming = { 80f, 100f, 120f, 300f };
-    public readonly int[] judgeScores = { 10, 7, 3, 0 };
-
-    public JudgeList judgeState;
+    private readonly float[] judgeTiming = { 80f, 100f, 120f, 0f };
+    private readonly int[] judgeScores = { 10, 7, 3, 0 };
+    private readonly Color[] judgeColors = { Color.cyan, Color.yellow, Color.blue, Color.red };
 
     public float latency = 225f;
     public float elapsedTime = 0;
@@ -34,7 +40,10 @@ public class JudgeManager : MonoBehaviour {
     {
         instance = this;
         latency = Launcher.latency;
-        elapsedTime -= GameManager.Instance.MsOffset + latency;
+        elapsedTime -= 2 * GameManager.Instance.MsPerBeat + GameManager.Instance.MsOffset + latency;
+
+        playerControl = player.GetComponent<PlayerMoveControl>();
+        judgeText = judgeObject.GetComponent<Text>();
     }
 	
 	// Update is called once per frame
@@ -49,16 +58,17 @@ public class JudgeManager : MonoBehaviour {
             if (Mathf.Abs(elapsedTime) < judgeTiming[(int)j])
             {
                 judge = j;
-                GameManager.Instance.JudgeScore += judgeScores[(int)j];
                 break;
             }
         }
 
-        if (elapsedTime > judgeTiming[(int)JudgeList.Poor])
+        if (judge == JudgeList.Poor && elapsedTime > judgeTiming[(int)JudgeList.Bad])
         {
             GameManager.Instance.MissJudge();
             elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
-            Debug.Log("Miss");
+
+            judgeText.text = judge.ToString().ToUpper();
+            judgeText.color = judgeColors[(int)judge];
         }
         
         bool isJumpButtonPressed;
@@ -66,7 +76,10 @@ public class JudgeManager : MonoBehaviour {
         
         if (isJumpButtonPressed && !isJumpButtonPressedPrev)
         {
-            judgeState = judge;
+            judgeText.text = judge.ToString().ToUpper();
+            judgeText.color = judgeColors[(int)judge];
+
+            GameManager.Instance.JudgeScore += judgeScores[(int)judge];
 
             Debug.Log(judge + " (" + elapsedTime +")");
 
@@ -75,11 +88,11 @@ public class JudgeManager : MonoBehaviour {
                 elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             }
 
-            player.GetComponent<PlayerMoveControl>().AnimationState(judge);
+            playerControl.AnimationState(judge);
 
-            if (new[] { JudgeList.Perfect, JudgeList.Good }.Contains(judge))
+            if (new[] { JudgeList.Perfect, JudgeList.Great }.Contains(judge))
             {
-                player.GetComponent<PlayerMoveControl>().ReadyToJump();
+                playerControl.ReadyToJump();
             }
             else
             {

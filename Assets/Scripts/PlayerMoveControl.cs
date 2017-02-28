@@ -42,7 +42,7 @@ public class PlayerMoveControl : MonoBehaviour {
         switch (judge)
         {
             case JudgeManager.JudgeList.Perfect:
-            case JudgeManager.JudgeList.Good:
+            case JudgeManager.JudgeList.Great:
                 charactorAnimator.runtimeAnimatorController = perfect;
                 break;
             case JudgeManager.JudgeList.Bad:
