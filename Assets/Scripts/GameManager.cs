@@ -18,6 +18,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     InputManager InputManagerInstance;
 
+    private Text lifeText;
+    private Text comboText;
+    private Text scoreText;
+
+    private Transform cameraTransform;
+
     public int life = 3;
     private int height = 0;
     private int combo = 0;
@@ -86,7 +92,7 @@ public class GameManager : MonoBehaviour
         if (isJumpSucceeded)
         {
             IncrementCombo();
-            GameObject.Find("Score").GetComponent<Text>().text = Score.ToString();
+            scoreText.text = Score.ToString();
 
             isMoving = true;
 
@@ -94,7 +100,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Fail");
             ResetCombo();
             GameOver();
         }
@@ -105,11 +110,13 @@ public class GameManager : MonoBehaviour
         Combo++;
         height++;
         JudgeScore += 100;
+        comboText.text = combo + " combo";
     }
 
     public void ResetCombo()
     {
         Combo = 0;
+        comboText.text = "";
     }
 
     public void MissJudge()
@@ -123,6 +130,12 @@ public class GameManager : MonoBehaviour
     {
         musicObj = Instantiate(music);
         musicInfo = music.GetComponent<MusicInfo>();
+
+        lifeText = GameObject.Find("Life Text").GetComponent<Text>();
+        comboText = GameObject.Find("Combo").GetComponent<Text>();
+        scoreText = GameObject.Find("Score").GetComponent<Text>();
+
+        cameraTransform = GameObject.Find("Main Camera").transform;
     }
 
     private void FixedUpdate()
@@ -142,7 +155,7 @@ public class GameManager : MonoBehaviour
             else
                 camSpeed -= camAcc * Time.deltaTime;
 
-            GameObject.Find("Main Camera").transform.Translate(new Vector2(0, camSpeed * Time.deltaTime));
+            cameraTransform.Translate(new Vector2(0, camSpeed * Time.deltaTime));
             JudgeLine.instance.IncreaseY(camSpeed * Time.deltaTime);
 
             camMoved += camSpeed * Time.deltaTime;
@@ -154,10 +167,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject lifeText = GameObject.Find("Life Text");
-        if(lifeText != null)
+        if (lifeText != null)
         {
-            lifeText.GetComponent<Text>().text = "X " + life;
+            lifeText.text = "X " + life;
         }
 
         if (!isGameOver && life < 0)
@@ -178,9 +190,10 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
 
-        Destroy(GameObject.Find("Life Text"));
+        Destroy(GameObject.Find("Life"));
         Destroy(GameObject.Find("Judge Line"));
         Destroy(GameObject.Find("Score"));
+        Destroy(GameObject.Find("Pause"));
         Destroy(musicObj);
 
         GameObject.Find("Game Over Text").GetComponent<Text>().text
