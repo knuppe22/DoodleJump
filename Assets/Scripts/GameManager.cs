@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Fail");
             ResetCombo();
-            IsGameOver();
+            GameOver();
         }
     }
 
@@ -162,14 +162,11 @@ public class GameManager : MonoBehaviour
 
         if (!isGameOver && life < 0)
         {
-            IsGameOver();
+            GameOver();
         }
         else if (isGameOver)
         {
-            bool isJumpButtonPressed;
-            InputManagerInstance.GetJumpButtonPressed(out isJumpButtonPressed);
-
-            if (isJumpButtonPressed)
+            if (Input.anyKey)
             {
                 int scene = SceneManager.GetActiveScene().buildIndex;
                 SceneManager.LoadScene(scene, LoadSceneMode.Single);
@@ -177,7 +174,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void IsGameOver()
+    void GameOver()
     {
         isGameOver = true;
 
