@@ -27,13 +27,9 @@ public class JudgeLine : MonoBehaviour
         LineDrawer = GetComponent<LineRenderer>();
         LineDrawer.startColor = Color.grey;
         LineDrawer.endColor = Color.grey;
-        
-        Vector3 worldPoint;
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            GetComponent<RectTransform>(),
-            gameObject.transform.position, Camera.main, out worldPoint);
-        basex = worldPoint.x;
-        basey = worldPoint.y;
+
+        basex = gameObject.transform.position.x;
+        basey = gameObject.transform.position.y;
     }
 
     void DrawCircle(float radius)

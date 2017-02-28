@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject accelerationFallback;
+
     public bool isJumpButtonPressed_ = false;
     public GridPos jumpGrid_ = GridPos.Center;
 
@@ -65,5 +68,9 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(accelerationFallback != null && Input.acceleration != Vector3.zero)
+        {
+            Destroy(accelerationFallback);
+        }
     }
 }

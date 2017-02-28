@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor.Animations;
 using System.Collections;
 using System;
 
@@ -8,11 +7,11 @@ public class PlayerMoveControl : MonoBehaviour {
     InputManager InputManagerInstance;
 
     [SerializeField]
-    AnimatorController perfect;
+    RuntimeAnimatorController perfect;
     [SerializeField]
-    AnimatorController bad;
+    RuntimeAnimatorController bad;
     [SerializeField]
-    AnimatorController intro;
+    RuntimeAnimatorController intro;
 
     private bool isJumping = false;
     private GridPos jumpGrid;

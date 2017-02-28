@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 82176154344329990}
   - component: {fileID: 114729677580865622}
   m_Layer: 0
-  m_Name: Spring BGM
+  m_Name: BGM
   m_TagString: BGM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
