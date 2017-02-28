@@ -22,6 +22,8 @@ public class JudgeManager : MonoBehaviour {
     public readonly float[] judgeTiming = { 80f, 100f, 120f, 300f };
     public readonly int[] judgeScores = { 10, 7, 3, 0 };
 
+    public JudgeList judgeState;
+
     public float latency = 225f;
     public float elapsedTime = 0;
 
@@ -64,12 +66,16 @@ public class JudgeManager : MonoBehaviour {
         
         if (isJumpButtonPressed && !isJumpButtonPressedPrev)
         {
+            judgeState = judge;
+
             Debug.Log(judge + " (" + elapsedTime +")");
 
             if (judge != JudgeList.Poor)
             {
                 elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
             }
+
+            player.GetComponent<PlayerMoveControl>().AnimationState(judge);
 
             if (new[] { JudgeList.Perfect, JudgeList.Good }.Contains(judge))
             {
