@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7debf0a9c9227044b9b821e9333c5710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: {fileID: 1421340923332266, guid: 0a90abdefff4e464aacfbbb3b6bbee3c, type: 2}
+  step: {fileID: 1421340923332266, guid: 2786e92e910c44345b5922da9ef7756a, type: 2}
 --- !u!1 &119808626
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +775,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   season: 0
-  music: {fileID: 1805843841355522, guid: f5ab7668ef957b44286275395d1de142, type: 2}
   InputManagerInstance: {fileID: 1993326186}
   life: 10
 --- !u!4 &905901044

@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public enum Seasons { Spring, Summer, Autumn, Winter };
     public Seasons season = Seasons.Spring;
 
-    public GameObject music;
+    private string theme;
+
     private GameObject musicObj;
     private MusicInfo musicInfo;
 
@@ -125,17 +126,29 @@ public class GameManager : MonoBehaviour
         life--;
     }
 
+    private void Awake()
+    {
+        theme = "Theme/" + season;
+
+        GameObject step = Resources.Load<GameObject>(theme + "/Step");
+        StepManager.Instance.step = step;
+    }
+
     // Use this for initialization
     void Start()
     {
-        musicObj = Instantiate(music);
-        musicInfo = music.GetComponent<MusicInfo>();
-
         lifeText = GameObject.Find("Life Text").GetComponent<Text>();
         comboText = GameObject.Find("Combo").GetComponent<Text>();
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         cameraTransform = GameObject.Find("Main Camera").transform;
+
+        Sprite bg = Resources.Load<Sprite>(theme + "/Background");
+        GameObject.Find("Background").GetComponent<Image>().sprite = bg;
+        
+        GameObject music = Resources.Load<GameObject>(theme + "/BGM");
+        musicInfo = music.GetComponent<MusicInfo>();
+        musicObj = Instantiate(music);
     }
 
     private void FixedUpdate()
