@@ -25,13 +25,23 @@ public class GameManager : MonoBehaviour
 
     private Transform cameraTransform;
 
+    [SerializeField]
+    GameObject menuPanel;
+
+    [SerializeField]
+    GameObject character;
+    [SerializeField]
+    GameObject hideOnPause;
+
+    public bool isPaused = false;
+
+    private bool isGameOver = false;
+
     public int life = 3;
     private int height = 0;
     private int combo = 0;
     private int judgeScore = 0;
     private int maxCombo = 0;
-
-    private bool isGameOver = false;
 
     public static GameManager Instance
     {
@@ -142,7 +152,7 @@ public class GameManager : MonoBehaviour
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         cameraTransform = GameObject.Find("Main Camera").transform;
-
+        
         Sprite bg = Resources.Load<Sprite>(theme + "/Background");
         GameObject.Find("Background").GetComponent<Image>().sprite = bg;
         
@@ -193,18 +203,63 @@ public class GameManager : MonoBehaviour
         {
             if (Input.anyKey)
             {
+                Time.timeScale = 1;
+
                 int scene = SceneManager.GetActiveScene().buildIndex;
                 SceneManager.LoadScene(scene, LoadSceneMode.Single);
             }
         }
     }
+    
+    public void Pause()
+    {
+        if (!isPaused)
+        {
+            isPaused = true;
+
+            musicObj.GetComponent<AudioSource>().Pause();
+            Time.timeScale = 0;
+
+            StepManager.Instance.ToggleSteps(false);
+            hideOnPause.SetActive(false);
+            character.SetActive(false);
+
+            menuPanel.SetActive(true);
+        }
+        else
+        {
+            isPaused = false;
+
+            musicObj.GetComponent<AudioSource>().Play();
+            Time.timeScale = 1;
+
+            StepManager.Instance.ToggleSteps(true);
+            hideOnPause.SetActive(true);
+            character.SetActive(true);
+
+            menuPanel.SetActive(false);
+        }
+    }
+
+    public void ToTitle()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Launcher");
+    }
 
     void GameOver()
     {
         isGameOver = true;
+        isPaused = true;
 
+        Time.timeScale = 0;
+
+        StepManager.Instance.ToggleSteps(false);
+
+        Destroy(GameObject.Find("Character"));
         Destroy(GameObject.Find("Life"));
         Destroy(GameObject.Find("Judge Line"));
+        Destroy(GameObject.Find("Judge"));
         Destroy(GameObject.Find("Score"));
         Destroy(GameObject.Find("Pause"));
         Destroy(musicObj);

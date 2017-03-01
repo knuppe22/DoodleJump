@@ -49,6 +49,9 @@ public class JudgeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (GameManager.Instance.isPaused)
+            return;
+
         JudgeList judge = JudgeList.Poor;
 
         elapsedTime += Time.deltaTime * 1000;

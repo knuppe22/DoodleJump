@@ -64,6 +64,30 @@ public class StepManager : MonoBehaviour {
         Spawn(ref nnnext, ref nnext);
     }
 
+    public void ToggleSteps(bool toShow)
+    {
+        if (toShow)
+        {
+            if (prev != null)
+                prev.SetActive(true);
+
+            cur.SetActive(true);
+            next.SetActive(true);
+            nnext.SetActive(true);
+            nnnext.SetActive(true);
+        }
+        else
+        {
+            if (prev != null)
+                prev.SetActive(false);
+
+            cur.SetActive(false);
+            next.SetActive(false);
+            nnext.SetActive(false);
+            nnnext.SetActive(false);
+        }
+    }
+
     public void DestroyPrevStep()
     {
         if (prev != null)
