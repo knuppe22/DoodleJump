@@ -19,6 +19,8 @@ public class PlayerMoveControl : MonoBehaviour {
     private float speed;
 
     private Animator charactorAnimator;
+    private enum Animation { Perfect, Bad, Intro };
+    Animation animationState = Animation.Intro;
 
     void Start()
     {
@@ -44,10 +46,12 @@ public class PlayerMoveControl : MonoBehaviour {
             case JudgeManager.JudgeList.Perfect:
             case JudgeManager.JudgeList.Great:
                 charactorAnimator.runtimeAnimatorController = perfect;
+                animationState = Animation.Perfect;
                 break;
             case JudgeManager.JudgeList.Bad:
             case JudgeManager.JudgeList.Poor:
                 charactorAnimator.runtimeAnimatorController = bad;
+                animationState = Animation.Bad;
                 break;
         }
     }
@@ -68,6 +72,11 @@ public class PlayerMoveControl : MonoBehaviour {
                 bool isSucceed = (jumpGrid == StepManager.Instance.NextGrid);
                 GameManager.Instance.JumpFinished(isSucceed);
             }
+        }
+        else if(animationState == Animation.Perfect)
+        {
+            animationState = Animation.Intro;
+            charactorAnimator.runtimeAnimatorController = intro;
         }
     }
 }

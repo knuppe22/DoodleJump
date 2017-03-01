@@ -72,6 +72,8 @@ public class JudgeManager : MonoBehaviour {
 
             judgeText.text = judge.ToString().ToUpper();
             judgeText.color = judgeColors[(int)judge];
+
+            playerControl.AnimationState(judge);
         }
         
         bool isJumpButtonPressed;
