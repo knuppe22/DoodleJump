@@ -65,8 +65,8 @@ public class PlayerMoveControl : MonoBehaviour {
             {
                 isJumping = false;
 
-                gameObject.transform.position
-                    = StepManager.Instance.CurrentPosition + direction;
+                gameObject.transform.position = direction
+                    + StepManager.Instance.CurrentPosition + Vector3.back;
 
                 bool isSucceed = (jumpGrid == StepManager.Instance.NextGrid);
                 GameManager.Instance.JumpFinished(isSucceed);
