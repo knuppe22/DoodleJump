@@ -35,8 +35,7 @@ public class PlayerMoveControl : MonoBehaviour {
 
         int gridDiff = (int)jumpGrid - (int)StepManager.Instance.CurrentGrid;
         direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;
-        speed = direction.magnitude / GameManager.Instance.MsPerBeat
-            * 1000 * Time.deltaTime;
+        speed = direction.magnitude / GameManager.Instance.MsPerBeat;
     }
 
     public void AnimationState(JudgeManager.JudgeList judge)
@@ -60,7 +59,7 @@ public class PlayerMoveControl : MonoBehaviour {
     {
         if (isJumping)
         {
-            gameObject.transform.Translate(direction.normalized * speed);
+            gameObject.transform.Translate(direction.normalized * speed * 1000 * Time.deltaTime);
 
             if (transform.position.y > StepManager.Instance.NextPosition.y)
             {
