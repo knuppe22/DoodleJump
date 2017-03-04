@@ -19,6 +19,7 @@ public class PlayerMoveControl : MonoBehaviour {
     private GridPos jumpGrid;
     private Vector3 direction;
     private float speed;
+    private GameObject jumpSFXobj;
 
     private Animator charactorAnimator;
     private enum Animation { Perfect, Bad, Intro };
@@ -34,7 +35,11 @@ public class PlayerMoveControl : MonoBehaviour {
         InputManagerInstance.GetJumpGrid(out jumpGrid);
 
         isJumping = true;
-        Instantiate(jumpSFX);
+        if (jumpSFXobj != null)
+        {
+            Destroy(jumpSFXobj);
+        }
+        jumpSFXobj = Instantiate(jumpSFX);
 
         int gridDiff = (int)jumpGrid - (int)StepManager.Instance.CurrentGrid;
         direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;
