@@ -12,6 +12,8 @@ public class PlayerMoveControl : MonoBehaviour {
     RuntimeAnimatorController bad;
     [SerializeField]
     RuntimeAnimatorController intro;
+    [SerializeField]
+    GameObject jumpSFX;
 
     private bool isJumping = false;
     private GridPos jumpGrid;
@@ -32,6 +34,7 @@ public class PlayerMoveControl : MonoBehaviour {
         InputManagerInstance.GetJumpGrid(out jumpGrid);
 
         isJumping = true;
+        Instantiate(jumpSFX);
 
         int gridDiff = (int)jumpGrid - (int)StepManager.Instance.CurrentGrid;
         direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;

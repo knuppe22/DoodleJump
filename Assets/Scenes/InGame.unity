@@ -2317,6 +2317,7 @@ MonoBehaviour:
   perfect: {fileID: 9100000, guid: 2150e2dec758a9b4ea936fb0f8e729c8, type: 2}
   bad: {fileID: 9100000, guid: 25d6db4d938db984993e94b5e8542188, type: 2}
   intro: {fileID: 9100000, guid: fa3168a7809500c44957e0c4583551f6, type: 2}
+  jumpSFX: {fileID: 1613941590793872, guid: c3c4536266d9d7c449942ebddaf3f24c, type: 2}
 --- !u!212 &1904722082
 SpriteRenderer:
   m_ObjectHideFlags: 0
