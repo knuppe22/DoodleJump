@@ -8,7 +8,10 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
-    public enum Seasons { Spring, Summer, Autumn, Winter };
+    public enum Seasons
+    {
+        Spring, Summer, Autumn, Winter
+    };
     public Seasons season = Seasons.Spring;
 
     private string theme;
@@ -129,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        theme = "Theme/" + season;
+        theme = "Theme/" + Launcher.season;
 
         GameObject step = Resources.Load<GameObject>(theme + "/Step");
         StepManager.Instance.step = step;
