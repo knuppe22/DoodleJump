@@ -33,4 +33,9 @@ public class RankManager : MonoBehaviour
         gameResults.TryGetValue(season, out list);
         list.Add(-gameResult.score, gameResult);
     }
+
+    public int GetRank(Seasons season, int score)
+    {
+        return gameResults[season].IndexOfKey(-score) + 1;
+    }
 }

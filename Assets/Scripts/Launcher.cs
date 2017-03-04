@@ -13,6 +13,10 @@ public class Launcher : MonoBehaviour {
     GameObject title;
     [SerializeField]
     GameObject canvas;
+    [SerializeField]
+    GameObject leftButton;
+    [SerializeField]
+    GameObject rightButton;
 
     public static float latency;
 
@@ -20,24 +24,20 @@ public class Launcher : MonoBehaviour {
 
     private float scale;
 
-    private void next()
+    public void Next()
     {
         int size = System.Enum.GetValues(typeof(Seasons)).Length;
 
-        if (season == Seasons.Summer)
-            season = Seasons.Spring;
-        else
-            season += 1;
+        if (season != Seasons.Summer)
+            season++;
     }
 
-    private void prev()
+    public void Prev()
     {
         int size = System.Enum.GetValues(typeof(Seasons)).Length;
 
-        if (season == Seasons.Spring)
-            season = Seasons.Summer;
-        else
-            season -= 1;
+        if (season != Seasons.Spring)
+            season--;
     }
 
     // Use this for initialization
@@ -54,18 +54,28 @@ public class Launcher : MonoBehaviour {
         if (canvas)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
-                next();
+                Next();
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                prev();
-            else
-                return;
+                Prev();
 
             Vector3 pos = stagesBase.transform.position;
             pos.x = -(int)season * 650 * scale;
 
             stagesBase.transform.position = pos;
             title.GetComponent<Text>().text = season.ToString();
+
+            if (season == Seasons.Spring)
+            {
+                leftButton.SetActive(false);
+                rightButton.SetActive(true);
+            }
+            else
+            {
+                leftButton.SetActive(true);
+                rightButton.SetActive(false);
+            }
         }
+
     }
 
     public void GameStart()

@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     GameObject character;
     [SerializeField]
     GameObject hideOnPause;
+    [SerializeField]
+    GameObject gameover;
 
     public bool isPaused = false;
 
@@ -147,6 +149,12 @@ public class GameManager : MonoBehaviour
 
         Sprite bg = Resources.Load<Sprite>(theme + "/Background");
         GameObject.Find("Background").GetComponent<Image>().sprite = bg;
+        
+        Sprite gameOverBg = Resources.Load<Sprite>(theme + "/GameOverBg");
+        GameObject.Find("Game Over Bg").GetComponent<Image>().sprite = gameOverBg;
+        Sprite gameOverRank = Resources.Load<Sprite>(theme + "/Rank");
+        GameObject.Find("Rank Sprite").GetComponent<Image>().sprite = gameOverRank;
+        GameObject.Find("Game Over").SetActive(false);
     }
 
     private void FixedUpdate()
@@ -226,7 +234,7 @@ public class GameManager : MonoBehaviour
             menuPanel.SetActive(false);
         }
     }
-
+    
     public void ToTitle()
     {
         Time.timeScale = 1;
@@ -237,6 +245,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         isPaused = true;
+        gameover.SetActive(true);
 
         Time.timeScale = 0;
 
@@ -250,13 +259,32 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.Find("Score"));
         Destroy(GameObject.Find("Pause"));
 
-        GameObject.Find("Game Over Text").GetComponent<Text>().text =
-            string.Format(
-                "Game Over\n\n" +
-                "Score: {0}\n\n" +
-                "Press Jump\n" +
-                "to restart",
-                Score
-            );
+        GameResult result;
+        result.score = -Score;
+        result.name = TitleManager.userName;
+        result.season = Launcher.season;
+        RankManager.Instance.RegisterGameResult(Launcher.season, result);
+
+        GameObject.Find("Final Score").GetComponent<Text>().text = Score.ToString();
+        GameObject.Find("Final Combo").GetComponent<Text>().text = MaxCombo.ToString() + " combo";
+        int rank = RankManager.Instance.GetRank(Launcher.season, Score);
+        GameObject.Find("Rank").GetComponent<Text>().text = rank.ToString();
+        string th;
+        switch(rank % 10)
+        {
+            case 1:
+                th = "st";
+                break;
+            case 2:
+                th = "nd";
+                break;
+            case 3:
+                th = "nd";
+                break;
+            default:
+                th = "st";
+                break;
+        }
+        GameObject.Find("Th").GetComponent<Text>().text = th;
     }
 }
