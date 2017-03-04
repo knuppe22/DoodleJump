@@ -16,26 +16,26 @@ public class Launcher : MonoBehaviour {
 
     public static float latency;
 
-    public static GameManager.Seasons season = GameManager.Seasons.Spring;
+    public static Seasons season = Seasons.Spring;
 
     private float scale;
 
     private void next()
     {
-        int size = System.Enum.GetValues(typeof(GameManager.Seasons)).Length;
+        int size = System.Enum.GetValues(typeof(Seasons)).Length;
 
-        if (season == GameManager.Seasons.Summer)
-            season = GameManager.Seasons.Spring;
+        if (season == Seasons.Summer)
+            season = Seasons.Spring;
         else
             season += 1;
     }
 
     private void prev()
     {
-        int size = System.Enum.GetValues(typeof(GameManager.Seasons)).Length;
+        int size = System.Enum.GetValues(typeof(Seasons)).Length;
 
-        if (season == GameManager.Seasons.Spring)
-            season = GameManager.Seasons.Summer;
+        if (season == Seasons.Spring)
+            season = Seasons.Summer;
         else
             season -= 1;
     }

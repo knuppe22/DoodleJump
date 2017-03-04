@@ -8,10 +8,6 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
-    public enum Seasons
-    {
-        Spring, Summer, Autumn, Winter
-    };
     public Seasons season = Seasons.Spring;
 
     private string theme;
