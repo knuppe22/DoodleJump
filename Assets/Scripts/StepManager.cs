@@ -5,6 +5,7 @@ using UnityEngine;
 public class StepManager : MonoBehaviour {
     private static StepManager instance;
     public GameObject step;
+    public GameObject PlayerCanvas;
 
     private GameObject prev;
     private GameObject cur;
@@ -50,6 +51,7 @@ public class StepManager : MonoBehaviour {
     void Start()
     {
         cur = Instantiate(step, Vector3.zero, Quaternion.identity);
+        cur.transform.parent = PlayerCanvas.transform;
         Spawn(ref next, ref cur);
         Spawn(ref nnext, ref next);
         Spawn(ref nnnext, ref nnext);
@@ -112,6 +114,7 @@ public class StepManager : MonoBehaviour {
         pos.y += 1f;
         pos.x = grid * 1f;
         over = Instantiate(step, pos, Quaternion.identity);
+        over.transform.parent = PlayerCanvas.transform;
         over.GetComponent<StepInfo>().xGrid = (GridPos)grid;
     }
 }

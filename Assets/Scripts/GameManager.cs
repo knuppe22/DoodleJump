@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
 
     private string theme;
 
-    private GameObject musicObj;
-    private MusicInfo musicInfo;
-
     [SerializeField]
     InputManager InputManagerInstance;
 
@@ -55,12 +52,6 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
-    public float MsPerBeat
-    {
-        get { return 60 * 1000 * 1f / musicInfo.bpm; }
-    }
-    public float MsOffset { get { return musicInfo.offsetms; } }
 
     public int JudgeScore
     {
@@ -147,18 +138,16 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        BgaManager.Instance.Create(theme);
+
         lifeText = GameObject.Find("Life Text").GetComponent<Text>();
         comboText = GameObject.Find("Combo").GetComponent<Text>();
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         cameraTransform = GameObject.Find("Main Camera").transform;
-        
+
         Sprite bg = Resources.Load<Sprite>(theme + "/Background");
         GameObject.Find("Background").GetComponent<Image>().sprite = bg;
-        
-        GameObject music = Resources.Load<GameObject>(theme + "/BGM");
-        musicInfo = music.GetComponent<MusicInfo>();
-        musicObj = Instantiate(music);
     }
 
     private void FixedUpdate()
@@ -210,16 +199,16 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
-    public void Pause()
-    {
-        if (!isPaused)
-        {
-            isPaused = true;
 
-            musicObj.GetComponent<AudioSource>().Pause();
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
             Time.timeScale = 0;
 
+            BgaManager.Instance.Pause();
             StepManager.Instance.ToggleSteps(false);
             hideOnPause.SetActive(false);
             character.SetActive(false);
@@ -228,11 +217,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            isPaused = false;
-
-            musicObj.GetComponent<AudioSource>().Play();
             Time.timeScale = 1;
 
+            BgaManager.Instance.Resume();
             StepManager.Instance.ToggleSteps(true);
             hideOnPause.SetActive(true);
             character.SetActive(true);
@@ -254,6 +241,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0;
 
+        BgaManager.Instance.Destroy();
         StepManager.Instance.ToggleSteps(false);
 
         Destroy(GameObject.Find("Character"));
@@ -262,12 +250,14 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.Find("Judge"));
         Destroy(GameObject.Find("Score"));
         Destroy(GameObject.Find("Pause"));
-        Destroy(musicObj);
 
-        GameObject.Find("Game Over Text").GetComponent<Text>().text
-            = "Game Over\n\nScore: " + Score
-            + "\n\n"
-            + "Press Jump\n"
-            + "to restart";
+        GameObject.Find("Game Over Text").GetComponent<Text>().text =
+            string.Format(
+                "Game Over\n\n" +
+                "Score: {0}\n\n" +
+                "Press Jump\n" +
+                "to restart",
+                Score
+            );
     }
 }

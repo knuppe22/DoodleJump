@@ -40,7 +40,7 @@ public class JudgeManager : MonoBehaviour {
     {
         instance = this;
         latency = Launcher.latency;
-        elapsedTime -= 2 * GameManager.Instance.MsPerBeat + GameManager.Instance.MsOffset + latency;
+        elapsedTime -= 2 * BgaManager.Instance.MsPerBeat + BgaManager.Instance.MsOffset + latency;
 
         playerControl = player.GetComponent<PlayerMoveControl>();
         judgeText = judgeObject.GetComponent<Text>();
@@ -68,7 +68,7 @@ public class JudgeManager : MonoBehaviour {
         if (judge == JudgeList.Poor && elapsedTime > judgeTiming[(int)JudgeList.Bad])
         {
             GameManager.Instance.MissJudge();
-            elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
+            elapsedTime -= 2 * BgaManager.Instance.MsPerBeat;
 
             judgeText.text = judge.ToString().ToUpper();
             judgeText.color = judgeColors[(int)judge];
@@ -90,7 +90,7 @@ public class JudgeManager : MonoBehaviour {
 
             if (judge != JudgeList.Poor)
             {
-                elapsedTime -= 2 * GameManager.Instance.MsPerBeat;
+                elapsedTime -= 2 * BgaManager.Instance.MsPerBeat;
             }
 
             playerControl.AnimationState(judge);

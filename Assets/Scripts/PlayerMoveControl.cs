@@ -35,7 +35,7 @@ public class PlayerMoveControl : MonoBehaviour {
 
         int gridDiff = (int)jumpGrid - (int)StepManager.Instance.CurrentGrid;
         direction = Vector2.up * 1f + Vector2.right * gridDiff * 1f;
-        speed = direction.magnitude / GameManager.Instance.MsPerBeat;
+        speed = direction.magnitude / BgaManager.Instance.MsPerBeat;
     }
 
     public void AnimationState(JudgeManager.JudgeList judge)
