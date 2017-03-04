@@ -74,4 +74,9 @@ public class Launcher : MonoBehaviour {
         
         SceneManager.LoadScene("InGame");
     }
+
+    public void GotoTitleScene()
+    {
+        SceneManager.LoadScene("TitleScene");
+    }
 }
