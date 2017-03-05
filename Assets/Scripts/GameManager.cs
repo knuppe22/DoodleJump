@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.Find("Score"));
         Destroy(GameObject.Find("Pause"));
 
-        GameResult result;
+        GameResult result = new GameResult();
         result.score = -Score;
         result.name = TitleManager.userName;
         result.season = Launcher.season;
@@ -268,6 +268,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Final Score").GetComponent<Text>().text = Score.ToString();
         GameObject.Find("Final Combo").GetComponent<Text>().text = MaxCombo.ToString() + " combo";
         int rank = RankManager.Instance.GetRank(Launcher.season, Score);
+        Debug.Log(rank);
         GameObject.Find("Rank").GetComponent<Text>().text = rank.ToString();
         string th;
         switch(rank % 10)
