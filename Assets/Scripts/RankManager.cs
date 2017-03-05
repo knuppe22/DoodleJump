@@ -32,14 +32,12 @@ public class RankManager : MonoBehaviour
         SortedList<int, GameResult> list;
         gameResults.TryGetValue(season, out list);
         list.Add(-gameResult.score, gameResult);
-        Debug.Log(list);
     }
 
     public int GetRank(Seasons season, int score)
     {
         SortedList<int, GameResult> list;
         gameResults.TryGetValue(season, out list);
-        Debug.Log(list.IndexOfKey(-score));
         return list.IndexOfKey(-score) + 1;
     }
 }
