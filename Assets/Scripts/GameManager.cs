@@ -195,16 +195,16 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
-        else if (isGameOver)
-        {
-            if (Input.anyKey)
-            {
-                Time.timeScale = 1;
+        //else if (isGameOver)
+        //{
+        //    if (Input.anyKey)
+        //    {
+        //        Time.timeScale = 1;
 
-                int scene = SceneManager.GetActiveScene().buildIndex;
-                SceneManager.LoadScene(scene, LoadSceneMode.Single);
-            }
-        }
+        //        int scene = SceneManager.GetActiveScene().buildIndex;
+        //        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+        //    }
+        //}
     }
 
     public void TogglePause()
@@ -238,7 +238,7 @@ public class GameManager : MonoBehaviour
     public void ToTitle()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Launcher");
+        SceneManager.LoadScene("TitleScene");
     }
 
     void GameOver()
@@ -258,15 +258,16 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.Find("Judge"));
         Destroy(GameObject.Find("Score"));
         Destroy(GameObject.Find("Pause"));
-
+        /*
         GameResult result = new GameResult();
         result.score = -Score;
         result.name = TitleManager.userName;
         result.season = Launcher.season;
         RankManager.Instance.RegisterGameResult(Launcher.season, result);
-
+        */
         GameObject.Find("Final Score").GetComponent<Text>().text = Score.ToString();
         GameObject.Find("Final Combo").GetComponent<Text>().text = MaxCombo.ToString() + " combo";
+        /*
         int rank = RankManager.Instance.GetRank(Launcher.season, Score);
         Debug.Log(rank);
         GameObject.Find("Rank").GetComponent<Text>().text = rank.ToString();
@@ -287,5 +288,14 @@ public class GameManager : MonoBehaviour
                 break;
         }
         GameObject.Find("Th").GetComponent<Text>().text = th;
+        */
+    }
+
+    public void Replay()
+    {
+        Time.timeScale = 1;
+
+            int scene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(scene, LoadSceneMode.Single);
     }
 }
